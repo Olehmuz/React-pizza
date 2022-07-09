@@ -15,6 +15,7 @@ const Content = () => {
         updatePizzaList(res);
         upadateIsLoading(false);
       });
+      window.scrollTo(0, 0);
   }, []);
 
 

@@ -14,7 +14,7 @@ const Header = () => {
           </div>
         </Link>
         <div className="header__cart">
-          <a href="/cart.html" className="button button--cart">
+          <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>
             <div className="button__delimiter"></div>
             <svg
@@ -47,10 +47,28 @@ const Header = () => {
               />
             </svg>
             <span>3</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 export default Header;
+
+
+{/* <div class="container container--cart">
+  <div class="cart cart--empty">
+    <h2>
+      Корзина пустая <icon>😕</icon>
+    </h2>
+    <p>
+      Вероятней всего, вы не заказывали ещё пиццу.
+      <br />
+      Для того, чтобы заказать пиццу, перейди на главную страницу.
+    </p>
+    <img src="/img/empty-cart.png" alt="Empty cart" />
+    <a href="/" class="button button--black">
+      <span>Вернуться назад</span>
+    </a>
+  </div>
+</div>; */}
