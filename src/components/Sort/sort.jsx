@@ -1,4 +1,14 @@
+import React from 'react';
+
 const Sort = () => {
+    const [selectedList, selectList] = React.useState(0);
+    const [activePopUp, ToggleActivePopUp] = React.useState(false);
+    const lists = ['популярности', 'цене', 'алфавиту'];
+
+    const toggleActiveList = (ind) => {
+      selectList(ind);
+      ToggleActivePopUp(false);
+    }
     return (
       <div className="sort">
         <div className="sort__label">
@@ -15,15 +25,14 @@ const Sort = () => {
             />
           </svg>
           <b>Сортировка по:</b>
-          <span>популярности</span>
+          <span onClick={() => ToggleActivePopUp(!activePopUp)}>{lists[selectedList]}</span>
         </div>
-        <div className="sort__popup">
+        {activePopUp &&
+        (<div className="sort__popup">
           <ul>
-            <li className="active">популярности</li>
-            <li>цене</li>
-            <li>алфавиту</li>
+            {lists.map((el, ind) => <li key={ind} onClick={() => toggleActiveList(ind)} className={selectedList === ind ? "active" : null}>{el}</li>)}
           </ul>
-        </div>
+        </div>)}
       </div>
     );
 }
