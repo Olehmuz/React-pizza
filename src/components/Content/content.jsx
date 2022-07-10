@@ -8,22 +8,29 @@ import { Skeleton } from './skeleton';
 const Content = () => {
   const [pizzaList, updatePizzaList] = React.useState([]);
   const [isLoading, upadateIsLoading] = React.useState(true);
+  const [activeIndex, updateActiveIndex] = React.useState(0);
+  const [selectedList, selectList] = React.useState({name: 'популярності(за спаданням)', sortType: 'rating'});
+
   React.useEffect(() => {
-    fetch("https://62c5bbc4a361f725128d123e.mockapi.io/items")
+    const category = activeIndex > 0 ? `category=${activeIndex}` : '';
+    const order = `&order=${selectedList.sortType.includes("-") ? "asc" : "desc"}`;
+    const sortBy = `&sortBy=${selectedList.sortType.replace("-","")}`;
+    upadateIsLoading(true);
+    fetch(`https://62c5bbc4a361f725128d123e.mockapi.io/items?${category}${sortBy}${order}`)
       .then((res) => res.json())
       .then((res) => {
         updatePizzaList(res);
         upadateIsLoading(false);
       });
       window.scrollTo(0, 0);
-  }, []);
+  }, [activeIndex, selectedList]);
 
-
+  console.log(activeIndex, selectedList);
   return (
     <>
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories value={activeIndex} updateValue={updateActiveIndex} />
+        <Sort value={selectedList} updateValue={selectList}/>
       </div>
       <h2 className="content__title">Всі піци</h2>
       <div className="content__items">

@@ -28,11 +28,22 @@ body {
     margin: 35px 0;
   }
 
+  // &__items {
+  //   display: grid;
+  //   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  //   gap:20px;
+  //   justify-items: center;
+  // }
   &__items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
+    justify-content: center;
+    @media (max-width:1024px){
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      justify-items: center;
+    }
     gap:20px;
-    justify-items: center;
+    
   }
 
   &__top {

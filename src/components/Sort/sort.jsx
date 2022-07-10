@@ -1,12 +1,18 @@
 import React from 'react';
 
-const Sort = () => {
-    const [selectedList, selectList] = React.useState(0);
+const Sort = ({value, updateValue}) => {
     const [activePopUp, ToggleActivePopUp] = React.useState(false);
-    const lists = ['популярности', 'цене', 'алфавиту'];
+    const lists = [
+      { name: "популярності (За спаданням)", sortType: "rating" },
+      { name: "популярности (За збільшенням)", sortType: "-rating" },
+      { name: "ціні (За спаданням)", sortType: "price" },
+      { name: "ціні (За збільшенням)", sortType: "-price" },
+      { name: "алфавіту (Від А до Я)", sortType: "-title" },
+      { name: "алфавіту (Від Я до А)", sortType: "title" },
+    ];
 
-    const toggleActiveList = (ind) => {
-      selectList(ind);
+    const toggleActiveList = (obj) => {
+      updateValue(obj);
       ToggleActivePopUp(false);
     }
     return (
@@ -25,12 +31,12 @@ const Sort = () => {
             />
           </svg>
           <b>Сортировка по:</b>
-          <span onClick={() => ToggleActivePopUp(!activePopUp)}>{lists[selectedList]}</span>
+          <span onClick={() => ToggleActivePopUp(!activePopUp)}>{value.name}</span>
         </div>
         {activePopUp &&
         (<div className="sort__popup">
           <ul>
-            {lists.map((el, ind) => <li key={ind} onClick={() => toggleActiveList(ind)} className={selectedList === ind ? "active" : null}>{el}</li>)}
+            {lists.map((el, ind) => <li key={ind} onClick={() => toggleActiveList(el)} className={value.sortType === el.sortType ? "active" : null}>{el.name}</li>)}
           </ul>
         </div>)}
       </div>
