@@ -1,6 +1,10 @@
+import React from "react";
 import logo from "./../../assets/img/pizza-logo.svg";
 import { Link } from "react-router-dom";
+import Search from './../Search/search.jsx';
+import { InputValueContext } from "../../App";
 const Header = () => {
+  const {inputValue, updateInputValue} = React.useContext(InputValueContext);
   return (
     <div className="header">
       <div className="container">
@@ -13,6 +17,7 @@ const Header = () => {
             </div>
           </div>
         </Link>
+        <Search inputValue={inputValue} updateInputValue={updateInputValue} />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>
@@ -56,19 +61,19 @@ const Header = () => {
 export default Header;
 
 
-{/* <div class="container container--cart">
-  <div class="cart cart--empty">
-    <h2>
-      Корзина пустая <icon>😕</icon>
-    </h2>
-    <p>
-      Вероятней всего, вы не заказывали ещё пиццу.
-      <br />
-      Для того, чтобы заказать пиццу, перейди на главную страницу.
-    </p>
-    <img src="/img/empty-cart.png" alt="Empty cart" />
-    <a href="/" class="button button--black">
-      <span>Вернуться назад</span>
-    </a>
-  </div>
-</div>; */}
+// {/* <div class="container container--cart">
+//   <div class="cart cart--empty">
+//     <h2>
+//       Корзина пустая <icon>😕</icon>
+//     </h2>
+//     <p>
+//       Вероятней всего, вы не заказывали ещё пиццу.
+//       <br />
+//       Для того, чтобы заказать пиццу, перейди на главную страницу.
+//     </p>
+//     <img src="/img/empty-cart.png" alt="Empty cart" />
+//     <a href="/" class="button button--black">
+//       <span>Вернуться назад</span>
+//     </a>
+//   </div>
+// </div>; */}
