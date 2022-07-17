@@ -7,7 +7,15 @@ import { Skeleton } from "./skeleton";
 import ReactPaginate from "react-paginate";
 import { InputValueContext } from "../../App";
 
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment } from './../../redux/slices/filterSlice'
+
+
 const Content = () => {
+
+  const count = useSelector((state) => state.counter.value)
+  const dispatch = useDispatch()
+
   const {inputValue} = React.useContext(InputValueContext);
   const [pizzaList, updatePizzaList] = React.useState([]);
   const [isLoading, upadateIsLoading] = React.useState(true);
@@ -42,6 +50,20 @@ const Content = () => {
 
   return (
     <>
+      <button
+          aria-label="Increment value"
+          onClick={() => dispatch(increment())}
+        >
+          Increment
+        </button>
+        <span>{count}</span>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatch(decrement())}
+        >
+          Decrement
+        </button>
+
       <div className="content__top">
         <Categories value={activeIndex} updateValue={updateActiveIndex} />
         <Sort value={selectedList} updateValue={selectList} />
