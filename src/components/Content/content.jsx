@@ -7,32 +7,34 @@ import { Skeleton } from "./skeleton";
 import ReactPaginate from "react-paginate";
 import { InputValueContext } from "../../App";
 
-import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment } from './../../redux/slices/filterSlice'
-
+import { useSelector, useDispatch } from "react-redux";
+import { setCategoryId, setSort } from "./../../redux/slices/filterSlice";
 
 const Content = () => {
 
-  const count = useSelector((state) => state.counter.value)
-  const dispatch = useDispatch()
-
+  const {sort, categoryId} = useSelector(state => state.filterSlice)
+  
   const {inputValue} = React.useContext(InputValueContext);
   const [pizzaList, updatePizzaList] = React.useState([]);
   const [isLoading, upadateIsLoading] = React.useState(true);
-  const [activeIndex, updateActiveIndex] = React.useState(0);
   const [activePage, updateActivePage] = React.useState(0);
-  const [selectedList, selectList] = React.useState({
-    name: "популярності(за спаданням)",
-    sortType: "rating",
-  });
+  
   const pageLimit = 4;
+  const dispatchFilter = useDispatch();
+  const onCategoryIdChange = (id) => {
+    dispatchFilter(setCategoryId(id));
+  }
+  const onSortChange = (obj) => {
+    dispatchFilter(setSort(obj));
+  }
+
   React.useEffect(() => {
     
-    const category = activeIndex > 0 ? `category=${activeIndex}` : "";
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
     const order = `&order=${
-      selectedList.sortType.includes("-") ? "asc" : "desc"
+      sort.sortType.includes("-") ? "asc" : "desc"
     }`;
-    const sortBy = `&sortBy=${selectedList.sortType.replace("-", "")}`;
+    const sortBy = `&sortBy=${sort.sortType.replace("-", "")}`;
     const search = inputValue ? `&search=${inputValue}` : "";
     const page = `&page=${activePage+1}&limit=${pageLimit}`;
     upadateIsLoading(true);
@@ -45,28 +47,14 @@ const Content = () => {
         upadateIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [activeIndex, selectedList, inputValue, activePage]);
+  }, [categoryId, sort, inputValue, activePage]);
 
 
   return (
     <>
-      <button
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          Increment
-        </button>
-        <span>{count}</span>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
-
       <div className="content__top">
-        <Categories value={activeIndex} updateValue={updateActiveIndex} />
-        <Sort value={selectedList} updateValue={selectList} />
+        <Categories value={categoryId} updateValue={onCategoryIdChange} />
+        <Sort value={sort} updateValue={onSortChange} />
       </div>
       <h2 className="content__title">Всі піци</h2>
       <div className="content__items">
