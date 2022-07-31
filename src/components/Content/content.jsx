@@ -9,6 +9,9 @@ import { InputValueContext } from "../../App";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId, setCurrentPage, setSort } from "./../../redux/slices/filterSlice";
+import { useSearchParams } from "react-router-dom";
+
+
 
 const Content = () => {
 
@@ -30,6 +33,14 @@ const Content = () => {
     dispatchFilter(setCurrentPage(number))
     console.log(number);
   };
+
+  const [searchParams, setSearchParams] = useSearchParams({});
+
+  React.useEffect(() => {
+    const params = {categoryId, sort: sort.sortType, inputValue, currentPage};
+    setSearchParams(params);
+  },[categoryId, sort, inputValue, currentPage, setSearchParams])
+
   React.useEffect(() => {
     
     const category = categoryId > 0 ? `category=${categoryId}` : "";
