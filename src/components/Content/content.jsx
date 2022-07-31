@@ -8,16 +8,15 @@ import ReactPaginate from "react-paginate";
 import { InputValueContext } from "../../App";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setCategoryId, setSort } from "./../../redux/slices/filterSlice";
+import { setCategoryId, setCurrentPage, setSort } from "./../../redux/slices/filterSlice";
 
 const Content = () => {
 
-  const {sort, categoryId} = useSelector(state => state.filterSlice)
+  const {sort, categoryId, currentPage} = useSelector(state => state.filterSlice)
   
   const {inputValue} = React.useContext(InputValueContext);
   const [pizzaList, updatePizzaList] = React.useState([]);
   const [isLoading, upadateIsLoading] = React.useState(true);
-  const [activePage, updateActivePage] = React.useState(0);
   
   const pageLimit = 4;
   const dispatchFilter = useDispatch();
@@ -27,7 +26,10 @@ const Content = () => {
   const onSortChange = (obj) => {
     dispatchFilter(setSort(obj));
   }
-
+  const onCurrentPageChange = (number) => {
+    dispatchFilter(setCurrentPage(number))
+    console.log(number);
+  };
   React.useEffect(() => {
     
     const category = categoryId > 0 ? `category=${categoryId}` : "";
@@ -36,7 +38,7 @@ const Content = () => {
     }`;
     const sortBy = `&sortBy=${sort.sortType.replace("-", "")}`;
     const search = inputValue ? `&search=${inputValue}` : "";
-    const page = `&page=${activePage+1}&limit=${pageLimit}`;
+    const page = `&page=${currentPage+1}&limit=${pageLimit}`;
     upadateIsLoading(true);
     fetch(
       `https://62c5bbc4a361f725128d123e.mockapi.io/items?${category}${page}${sortBy}${order}${search}`
@@ -47,7 +49,7 @@ const Content = () => {
         upadateIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sort, inputValue, activePage]);
+  }, [categoryId, sort, inputValue, currentPage]);
 
 
   return (
@@ -69,7 +71,8 @@ const Content = () => {
         className="pagination"
         breakLabel="..."
         nextLabel=">"
-        onPageChange={(e) => updateActivePage(e.selected)}
+        forcePage={currentPage}
+        onPageChange={(e) => onCurrentPageChange(e.selected)}
         pageRangeDisplayed={pageLimit}
         pageCount={3}
         previousLabel="<"

@@ -2,9 +2,9 @@ import React from "react";
 import logo from "./../../assets/img/pizza-logo.svg";
 import { Link } from "react-router-dom";
 import Search from './../Search/search.jsx';
-import { InputValueContext } from "../../App";
+
 const Header = () => {
-  const {inputValue, updateInputValue} = React.useContext(InputValueContext);
+  
   return (
     <div className="header">
       <div className="container">
@@ -17,7 +17,7 @@ const Header = () => {
             </div>
           </div>
         </Link>
-        <Search inputValue={inputValue} updateInputValue={updateInputValue} />
+        <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>

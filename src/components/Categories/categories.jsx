@@ -1,8 +1,8 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 
 const Categories = ({value, updateValue}) => {
-    const dispatchFilter = useDispatch();
+    //const dispatchFilter = useDispatch();
     const categoriesArray = ['Всі','М\'ясні','Вегітаріанські','Гриль','Гострі','Закриті']
     
     return (
