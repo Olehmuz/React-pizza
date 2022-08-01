@@ -1,15 +1,17 @@
 import React from 'react';
 
+export const lists = [
+  { name: "популярності (За спаданням)", sortType: "rating" },
+  { name: "популярности (За збільшенням)", sortType: "-rating" },
+  { name: "ціні (За спаданням)", sortType: "price" },
+  { name: "ціні (За збільшенням)", sortType: "-price" },
+  { name: "алфавіту (Від А до Я)", sortType: "-title" },
+  { name: "алфавіту (Від Я до А)", sortType: "title" },
+];
+
 const Sort = ({value, updateValue}) => {
     const [activePopUp, ToggleActivePopUp] = React.useState(false);
-    const lists = [
-      { name: "популярності (За спаданням)", sortType: "rating" },
-      { name: "популярности (За збільшенням)", sortType: "-rating" },
-      { name: "ціні (За спаданням)", sortType: "price" },
-      { name: "ціні (За збільшенням)", sortType: "-price" },
-      { name: "алфавіту (Від А до Я)", sortType: "-title" },
-      { name: "алфавіту (Від Я до А)", sortType: "title" },
-    ];
+    
 
     const toggleActiveList = (obj) => {
       updateValue(obj);
