@@ -62,22 +62,21 @@ const Content = () => {
   },[categoryId, sort, inputValue, currentPage, setSearchParams])
 
   const getPizzas = () => {
-    const category = `categoryId > 0 ? category=${categoryId} : ""`;
-    const order = `&order=${sort.sortType.includes("-") ? "asc" : "desc"}`;
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
+    const order = `&order=${
+      sort.sortType.includes("-") ? "asc" : "desc"
+    }`;
     const sortBy = `&sortBy=${sort.sortType.replace("-", "")}`;
-    const search = `inputValue ? &search=${inputValue} : ""`;
-    const page = `&page=${currentPage + 1}&limit=${pageLimit}`;
+    const search = inputValue ? `&search=${inputValue}` : "";
+    const page = `&page=${currentPage+1}&limit=${pageLimit}`;
     upadateIsLoading(true);
-
-    axios
-      .get(
-        `https://62c5bbc4a361f725128d123e.mockapi.io/items?${category}${page}${sortBy}${order}${search}`
-      )
+    axios.get(
+      `https://62c5bbc4a361f725128d123e.mockapi.io/items?${category}${page}${sortBy}${order}${search}`
+    )
       .then((res) => {
         updatePizzaList(res.data);
         upadateIsLoading(false);
       });
-
     window.scrollTo(0, 0);
   };
   React.useEffect(() => {
