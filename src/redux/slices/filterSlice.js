@@ -23,7 +23,6 @@ import { createSlice } from '@reduxjs/toolkit'
         state.currentPage = action.payload;
       },
       setFilters: (state, action) => {
-        console.log(action.payload)
         if (Object.keys(action.payload).length) {
           state.currentPage = Number(action.payload.currentPage);
           state.categoryId = Number(action.payload.categoryId);

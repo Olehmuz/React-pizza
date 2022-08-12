@@ -10,10 +10,12 @@ body {
 
 .wrapper {
   width: calc(100vw - 100px);
-  @media (max-width:1024px){
+
+  @media (max-width:1024px) {
     width: calc(100vw - 30px);
-    margin-top: 15px  ;
+    margin-top: 15px;
   }
+
   height: 100%;
   background-color: #fff;
   margin: 50px auto;
@@ -23,6 +25,22 @@ body {
 
 .content {
   padding: 40px 0;
+
+  &__error-info {
+    margin: 100px auto;
+    width: 500px;
+    text-align: center;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
 
   &__title {
     margin: 35px 0;
@@ -38,22 +56,25 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
     justify-content: center;
-    @media (max-width:1024px){
+
+    @media (max-width:1024px) {
       grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
       justify-items: center;
     }
+
     gap:20px;
-    
+
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @media (max-width:870px){
+
+    @media (max-width:870px) {
       flex-direction: column;
-      align-items:flex-start;
-      gap:20px;
+      align-items: flex-start;
+      gap: 20px;
     }
   }
 }
@@ -62,9 +83,11 @@ body {
   width: $container-width;
   margin: 0 auto;
   overflow: hidden;
+
   &--cart {
     max-width: 820px;
     margin: 90px auto;
+
     .content__title {
       margin: 0;
     }
@@ -77,9 +100,11 @@ body {
     justify-content: space-between;
     align-items: center;
   }
-  .content__items{
+
+  .content__items {
     display: block;
   }
+
   .content__title {
     display: flex;
     align-items: center;
@@ -91,6 +116,7 @@ body {
       width: 30px;
       height: 30px;
       margin-right: 10px;
+
       path {
         stroke: $black;
         stroke-width: 1.9;
@@ -123,6 +149,7 @@ body {
           stroke: darken($color: #b6b6b6, $amount: 50);
         }
       }
+
       span {
         color: darken($color: #b6b6b6, $amount: 50);
       }
@@ -223,6 +250,7 @@ body {
           height: 11.5px;
           position: relative;
         }
+
         &:hover,
         &:active {
           border-color: darken($color: $gray-line, $amount: 80);
@@ -280,6 +308,7 @@ body {
 
         svg {
           margin-right: 12px;
+
           path {
             fill: transparent;
             stroke-width: 2;
