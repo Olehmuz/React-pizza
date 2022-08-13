@@ -1,15 +1,16 @@
 import React from "react";
 
 import style from "./search.module.scss";
-import { InputValueContext } from "../../App";
+
 import debounce from "lodash.debounce";
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../redux/slices/pizzaSlice";
 const Search = () => {
-  const [searchValue, updateSearchValue] = React.useState("");
-  const { updateInputValue } = React.useContext(InputValueContext);
-  
-  const updateSearch = React.useMemo(() =>
-    debounce((str) => updateInputValue(str), 250),
-    [updateInputValue]
+   const [currentValue, updateCurrentValue] = React.useState("");
+  const dispatch = useDispatch();
+  const updateSearch = React.useMemo(
+    () => debounce((str) => dispatch(setSearchValue(str)), 250),
+    [dispatch]
   );
 
   const inputRef = React.useRef();
@@ -51,21 +52,19 @@ const Search = () => {
       <input
         ref={inputRef}
         className={style.search}
-        value={searchValue}
+        value={currentValue}
         onChange={(event) => {
-          updateSearchValue(event.target.value);
+          updateCurrentValue(event.target.value);
           updateSearch(event.target.value);
-          console.log(event)
         }}
         type="text"
       />
-      {searchValue && (
+      {currentValue && (
         <svg
           className={style.close}
           onClick={() => {
-            updateSearchValue("");
-            updateInputValue("");
-            
+            updateCurrentValue('');
+            updateSearch("");
             inputRef.current.focus();
           }}
           viewBox="0 0 20 20"

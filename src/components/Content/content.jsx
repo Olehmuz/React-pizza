@@ -5,10 +5,10 @@ import Categories from "../Categories/categories";
 import Sort from "../Sort/sort";
 import { Skeleton } from "./skeleton";
 import ReactPaginate from "react-paginate";
-import { InputValueContext } from "../../App";
 import { lists } from "../Sort/sort";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  selectFilter,
   setCategoryId,
   setCurrentPage,
   setFilters,
@@ -16,21 +16,19 @@ import {
 } from "./../../redux/slices/filterSlice";
 import { useSearchParams } from "react-router-dom";
 import qs from "qs";
-import { fetchPizzas } from "../../redux/slices/pizzaSlice";
+import { fetchPizzas, selectPizza } from "../../redux/slices/pizzaSlice";
 
 const Content = () => {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const { sort, categoryId, currentPage } = useSelector(
-    (state) => state.filterSlice
-  );
-  const { items, loadingStatus } = useSelector((state) => state.pizzaSlice);
-  const { inputValue } = React.useContext(InputValueContext);
-  const [isLoading, upadateIsLoading] = React.useState(true);
+  const { sort, categoryId, currentPage } = useSelector(selectFilter);
+
+  const { items, loadingStatus, searchValue } = useSelector(selectPizza);
 
   const pageLimit = 4;
   const dispatch = useDispatch();
+
   const onCategoryIdChange = (id) => {
     dispatch(setCategoryId(id));
   };
@@ -39,11 +37,10 @@ const Content = () => {
   };
   const onCurrentPageChange = (number) => {
     dispatch(setCurrentPage(number));
-    console.log(number);
   };
 
   const [searchParams, setSearchParams] = useSearchParams({});
-  // Work with first render
+  
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
@@ -67,21 +64,20 @@ const Content = () => {
       const params = {
         categoryId,
         sort: sort.sortType,
-        inputValue,
+        searchValue,
         currentPage,
       };
       setSearchParams(params);
     }
     isMounted.current = true;
-  }, [categoryId, sort, inputValue, currentPage, setSearchParams]);
+  }, [categoryId, sort, searchValue, currentPage, setSearchParams]);
 
   const getPizzas = async () => {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const order = `&order=${sort.sortType.includes("-") ? "asc" : "desc"}`;
     const sortBy = `&sortBy=${sort.sortType.replace("-", "")}`;
-    const search = inputValue ? `&search=${inputValue}` : "";
+    const search = searchValue ? `&search=${searchValue}` : "";
     const page = `&page=${currentPage + 1}&limit=${pageLimit}`;
-    upadateIsLoading(true);
 
     dispatch(fetchPizzas({ category, page, sortBy, order, search }));
 
@@ -92,7 +88,7 @@ const Content = () => {
       getPizzas();
     }
     isSearch.current = false;
-  }, [categoryId, sort, inputValue, currentPage]);
+  }, [categoryId, sort, searchValue, currentPage]);
 
   return (
     <>
@@ -101,17 +97,18 @@ const Content = () => {
         <Sort value={sort} updateValue={onSortChange} />
       </div>
       <h2 className="content__title">Всі піци</h2>
-      {loadingStatus === 'error' && <div className="content__error-info">
-        <h2>Сталась помилка 😕</h2>
-        <p>На жаль, пітц німа. Спробуйте повторити спробу пізніше.</p>
-      </div>}
+      {loadingStatus === "error" && (
+        <div className="content__error-info">
+          <h2>Сталась помилка 😕</h2>
+          <p>На жаль, пітц німа. Спробуйте повторити спробу пізніше.</p>
+        </div>
+      )}
       <div className="content__items">
-        {loadingStatus === 'loading'
+        {loadingStatus === "loading"
           ? [...new Array(4)].map((el, ind) => <Skeleton key={ind} />)
           : items.map((el) => {
               return <PizzaBlock key={el.id} {...el} />;
-            })
-        }
+            })}
       </div>
 
       <ReactPaginate

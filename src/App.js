@@ -6,12 +6,9 @@ import Header from "./components/Header/header";
 import PageNotFound from "./pages/PageNotFound";
 import ContentPage from "./pages/ContentPage";
 import Cart from "./pages/Cart";
-export const InputValueContext = React.createContext();
 function App() {
-  const [inputValue, updateInputValue] = React.useState("");
 
   return (
-    <InputValueContext.Provider value={{ inputValue, updateInputValue }}>
       <div className="App">
         <div className="wrapper">
           <Header />
@@ -24,7 +21,6 @@ function App() {
           </div>
         </div>
       </div>
-    </InputValueContext.Provider>
   );
 }
 

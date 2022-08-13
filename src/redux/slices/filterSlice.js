@@ -39,6 +39,8 @@ import { createSlice } from '@reduxjs/toolkit'
     }
   })
 
+  export const selectFilter = (state) => state.filterSlice;
+
   export const { setCategoryId, setSort, setCurrentPage, setFilters } = filterSlice.actions;
   
   export default filterSlice.reducer;
