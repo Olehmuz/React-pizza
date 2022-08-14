@@ -41,6 +41,7 @@ const Content = () => {
 
   const [searchParams, setSearchParams] = useSearchParams({});
   
+
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
