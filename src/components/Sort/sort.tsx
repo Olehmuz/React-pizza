@@ -26,8 +26,8 @@ const Sort:React.FC = () => {
   const popUp = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const handlerClick = (e:any) => {
-      if (!e.path.includes(popUp.current)) {
+    const handlerClick = (e:MouseEvent) => {
+      if (popUp.current && !e.composedPath().includes(popUp.current)) {
         ToggleActivePopUp(false);
       }
     };

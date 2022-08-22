@@ -1,7 +1,7 @@
 import React from 'react'
 type CategoriesProps = {
     value: number;
-    updateValue: any;
+    updateValue: (id: number) => void;
 }
 const Categories:React.FC<CategoriesProps> = ({value, updateValue}) => {
     const categoriesArray = ['Всі','М\'ясні','Вегітаріанські','Гриль','Гострі','Закриті']

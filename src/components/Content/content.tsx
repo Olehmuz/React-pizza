@@ -59,7 +59,13 @@ const Content:React.FC = () => {
 
   React.useEffect(() => {
     if (isMounted.current) {
-      const params = {
+      // type Params = {
+      //   categoryId: number;
+      //   sort: string;
+      //   searchValue: string;
+      //   currentPage: number;
+      // };
+      const params: any = {
         categoryId,
         sort: sort.sortType,
         searchValue,
