@@ -3,11 +3,12 @@ import React from "react";
 import style from "./search.module.scss";
 
 import debounce from "lodash.debounce";
-import { useDispatch } from "react-redux";
+
 import { setSearchValue } from "../../redux/slices/pizzaSlice";
+import { useAppDispatch } from "../../redux/store";
 const Search = () => {
    const [currentValue, updateCurrentValue] = React.useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const updateSearch = React.useMemo(
     () => debounce((str) => dispatch(setSearchValue(str)), 250),
     [dispatch]

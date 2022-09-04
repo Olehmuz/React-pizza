@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { addItem, decreaseItem, removeItem } from "../../redux/slices/cartSlice";
+import { useAppDispatch } from "../../redux/store";
 type CartItemProps = {
   id: string;
   title: string;
@@ -11,7 +11,7 @@ type CartItemProps = {
   count: number;
 };
 const CartItem:React.FC<CartItemProps> = ({ id, type, count, price, size, title, imageUrl }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
   return (
     <div className="cart__item">
       <div className="cart__item-img">

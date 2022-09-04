@@ -1,6 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectFilter, setSort } from "../../redux/slices/filterSlice";
+import { useAppDispatch } from "../../redux/store";
 type SortType = {
   name: string;
   sortType: string;
@@ -18,7 +19,7 @@ const Sort:React.FC = () => {
   const [activePopUp, ToggleActivePopUp] = React.useState(false);
   const { sort } = useSelector(selectFilter);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const onSortChange = (obj:SortType) => {
     dispatch(setSort(obj));
   };

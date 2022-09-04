@@ -6,7 +6,7 @@ import Sort from "../Sort/sort";
 import { Skeleton } from "./skeleton";
 import ReactPaginate from "react-paginate";
 import { lists } from "../Sort/sort";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectFilter,
   setCategoryId,
@@ -16,6 +16,7 @@ import {
 import { useSearchParams } from "react-router-dom";
 import qs from "qs";
 import { fetchPizzas, selectPizza } from "../../redux/slices/pizzaSlice";
+import { useAppDispatch } from "../../redux/store";
 
 const Content:React.FC = () => {
   const isSearch = React.useRef(false);
@@ -26,7 +27,7 @@ const Content:React.FC = () => {
   const { items, loadingStatus, searchValue } = useSelector(selectPizza);
 
   const pageLimit = 4;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onCategoryIdChange = (id: number) => {
     dispatch(setCategoryId(id));
@@ -59,7 +60,7 @@ const Content:React.FC = () => {
 
   React.useEffect(() => {
     if (isMounted.current) {
-      // type Params = {
+      // type ParamsType = {
       //   categoryId: number;
       //   sort: string;
       //   searchValue: string;
@@ -82,7 +83,7 @@ const Content:React.FC = () => {
     const sortBy = `&sortBy=${sort.sortType.replace("-", "")}`;
     const search = searchValue ? `&search=${searchValue}` : "";
     const page = `&page=${currentPage + 1}&limit=${pageLimit}`;
-    // @ts-ignore
+
     dispatch(fetchPizzas({ category, page, sortBy, order, search }));
 
     window.scrollTo(0, 0);

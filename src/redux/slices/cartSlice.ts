@@ -1,7 +1,7 @@
 import { RootState } from './../store';
 import { createSlice } from "@reduxjs/toolkit";
 
-type StateItems = {
+export type StateItems = {
   id: string;
   title: string;
   imageUrl: string;
